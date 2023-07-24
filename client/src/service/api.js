@@ -3,7 +3,7 @@ import axios from 'axios';
 import { API_NOTIFICATION_MESSAGES, SERVICE_URLS } from '../constants/config';
 import { getAccessToken, getRefreshToken, setAccessToken, getType } from '../utils/common-utils';
 
-const API_URL = '';
+const API_URL = 'http://localhost:8000';
 
 const axiosInstance = axios.create({
     baseURL: API_URL,
@@ -61,10 +61,29 @@ const processResponse = (response) => {
 //////////////////////////////
 const ProcessError = async (error) => {
     if (error.response) {
+        // Request made and server responded with a status code 
+        // that falls out of the range of 2xx
         if (error.response?.status === 403) {
+            // const { url, config } = error.response;
+            console.log(error);
+            try {
+                let response = await API.getRefreshToken({ token: getRefreshToken() });
+                if (response.isSuccess) {
+                    sessionStorage.clear();
+                    setAccessToken(response.data.accessToken);
 
-            sessionStorage.clear();
+                    // const requestData = error.toJSON();
 
+                    // let response1 = await axios({
+                    //     method: requestData.config.method,
+                    //     url: requestData.config.baseURL + requestData.config.url,
+                    //     headers: { "content-type": "application/json", "authorization": getAccessToken() },
+                    //     params: requestData.config.params
+                    // });
+                }
+            } catch (error) {
+                return Promise.reject(error)
+            }
         } else {
             console.log("ERROR IN RESPONSE: ", error.toJSON());
             return {
@@ -74,7 +93,7 @@ const ProcessError = async (error) => {
             }
         }
     } else if (error.request) {
-
+        // The request was made but no response was received
         console.log("ERROR IN RESPONSE: ", error.toJSON());
         return {
             isError: true,
@@ -82,7 +101,7 @@ const ProcessError = async (error) => {
             code: ""
         }
     } else {
-
+        // Something happened in setting up the request that triggered an Error
         console.log("ERROR IN RESPONSE: ", error.toJSON());
         return {
             isError: true,
@@ -99,7 +118,7 @@ for (const [key, value] of Object.entries(SERVICE_URLS)) {
         axiosInstance({
             method: value.method,
             url: value.url,
-            data: value.method === 'DELETE' ? {} : body,
+            data: value.method === 'DELETE' ? '' : body,
             responseType: value.responseType,
             headers: {
                 authorization: getAccessToken(),

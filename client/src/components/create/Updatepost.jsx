@@ -96,15 +96,7 @@ const Textarea = styled(TextareaAutosize)(({ theme }) => ({
     },
 }))
 
-const StyledTextArea = styled(TextareaAutosize)`
-    width: 100%;
-    border: none;
-    margin-top: 50px;
-    font-size: 18px;
-    &:focus-visible {
-        outline: none;
-    }
-`;
+
 
 const initialPost = {
     title: "",
@@ -141,7 +133,7 @@ const Update = () => {
             }
         }
         fetchData();
-    }, [])
+    }, [id])
 
     useEffect(() => {
         const getImage = async () => {
