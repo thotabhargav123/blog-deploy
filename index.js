@@ -25,10 +25,10 @@ app.get('*', function (_, res) {
 
 
 const PORT = process.env.PORT || 8000;
-const username = process.env.DB_USERNAME;
-const password = process.env.DB_PASSWORD;
-const URL = process.env.url || `mongodb+srv://${username}:${password}@blogapp.jm77a8i.mongodb.net/?retryWrites=true&w=majority`
+// const username = process.env.DB_USERNAME;
+// const password = process.env.DB_PASSWORD;
+// const URL = process.env.URL || `mongodb+srv://${username}:${password}@blogapp.jm77a8i.mongodb.net/?retryWrites=true&w=majority`
 
-Connection(URL);
+Connection();
 
 app.listen(PORT, () => console.log(`Server is running successfully on PORT ${PORT}`));

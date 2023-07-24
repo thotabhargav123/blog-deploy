@@ -7,13 +7,13 @@ dotenv.config();
 const username = process.env.DB_USERNAME
 const password = process.env.DB_PASSWORD
 const storage = new GridFsStorage({
-    url: process.env.url || `mongodb+srv://${username}:${password}@blogapp.jm77a8i.mongodb.net/?retryWrites=true&w=majority`,
+    url: `mongodb+srv://${username}:${password}@blogapp.jm77a8i.mongodb.net/?retryWrites=true&w=majority`,
     options: { useNewUrlParser: true },
     file: (request, file) => {
-        const match = ["image/png", "image/jpg", "image/jpeg", "image/gif", "image/svg"];
+        const match = ["image/png", "image/jpg"];
 
-        if(match.indexOf(file.memeType) === -1) 
-            return`${Date.now()}-blog-${file.originalname}`;
+        if (match.indexOf(file.memeType) === -1)
+            return `${Date.now()}-blog-${file.originalname}`;
 
         return {
             bucketName: "photos",
@@ -22,4 +22,4 @@ const storage = new GridFsStorage({
     }
 });
 
-export default multer({storage});
+export default multer({ storage });

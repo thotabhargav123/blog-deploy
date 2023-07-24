@@ -1,9 +1,14 @@
 import mongoose from "mongoose";
+const username = process.env.DB_USERNAME;
+const password = process.env.DB_PASSWORD;
+// const URL = `mongodb+srv://${username}:${password}@blogapp.jm77a8i.mongodb.net/?retryWrites=true&w=majority`
 
-const Connection = async (URL) => {
-    // const URL = `mongodb+srv://${username}:${password}@blogapp.jm77a8i.mongodb.net/?retryWrites=true&w=majority`
+const Connection = async () => {
+    const URL = `mongodb+srv://${username}:${password}@blogapp.jm77a8i.mongodb.net/?retryWrites=true&w=majority`
+
     try {
-        await mongoose.connect(URL, { useNewUrlParser: true });
+        mongoose.connect(URL, { useNewUrlParser: true });
+        mongoose.set('strictQuery', false);
         console.log("Connected")
     }
     catch (error) {
