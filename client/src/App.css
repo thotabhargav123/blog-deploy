@@ -1,0 +1,40 @@
+.publishbutton {
+  background: rgb(30, 52, 246);
+  position: relative;
+  padding: 13px 24px;
+  border-radius: 17px;
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 0.2s;
+  text-transform: uppercase;
+}
+
+.publishbutton:before {
+  content: "";
+  height: 100%;
+  width: 100%;
+  background: rgb(57, 182, 255);
+  position: absolute;
+  border-radius: 100px;
+  left: 0;
+  top: 0;
+  z-index: -1;
+  transition: all 0.5s cubic-bezier(0.42, -0.01, 0.04, 0.81);
+}
+
+.publishbutton:active::before {
+  animation: scale 1s;
+  /* transform: scale(1.4, 1.6);
+  opacity: 0; */
+}
+
+@keyframes scale {
+  from {
+    transform: scale(1, 1);
+    opacity: 1;
+  }
+  to {
+    transform: scale(1.4, 1.6);
+    opacity: 0;
+  }
+}
